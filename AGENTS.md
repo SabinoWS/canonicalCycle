@@ -70,16 +70,6 @@ archives/
 
 ---
 
-## 🔗 Links Úteis
-
-- [README.md](./README.md) - Visão geral do projeto (para humanos)
-- [GUIDELINES.md](./GUIDELINES.md) - Diretrizes para humanos
-- [COMO_USAR.md](./COMO_USAR.md) - Como usar as diretrizes em diferentes ferramentas (para humanos)
-- [INICIALIZACAO.md](./INICIALIZACAO.md) - Assistente de inicialização de novos ciclos (para humanos)
-- [templates/](./templates/) - Templates de artefatos
-
----
-
 ## ⚠️ Nota
 
 **Este arquivo é um índice de redirecionamento para agentes de IA.** 
