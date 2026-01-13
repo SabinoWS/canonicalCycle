@@ -1,0 +1,119 @@
+﻿LEVANTAMENTOS PARA NOVA FUNCIONALIDADE NO TIME ANYWHERE
+
+
+Artefatos que devem estar no documento:
+
+
+- Análise de negócio (ANALISTA)
+-- Resumo das necessidades e impacto no produto
+-- Razão da iniciativa
+-- Jornada e funcionalidades
+-- Cenários (história de usuário das funcionalidades)
+--- Cenários de sucesso
+--- Cenários de falha
+-- Casos de uso atendidos (exemplos práticos)
+– Benches de mercado
+-- Exemplos de configuração
+-- Exemplos de validações
+-- Épico no jira para guardar tickets maiores para Prototipagem, Análise técnica e Desenvolvimento
+
+
+- Prototipagem (DESIGNER)
+-- Link figma
+-- Protótipo vivo abrindo e fechando em local de abertura (exemplo: view mode Form)
+-- Prints das telas
+-- Versão desktop
+-- Versão mobile
+—------------------------------------------
+
+- Análise técnica (ARQUITETO E ENGENHEIRO)
+-- Resumo para Discovery de riscos
+-- Desenho de arquitetura e fluxo
+-- Resumo das soluções encontradas
+-- Tecnologias utilizadas (incluindo bibliotecas e frameworks)
+-- Timebox máximo para implementação
+-- Membros responsáveis para desenvolvimento
+-- Quebra de tarefas em tickets menores para desenvolvimento
+
+— PRIORIZAÇÃO DAS TAREFAS (negócio) —
+
+- Desenvolvimento
+-- Alinhamentos com processos anteriores
+-- Geração de código
+-- Qualidade
+-- Deploy em produção
+
+
+EXEMPLO:
+
+FUNCIONALIDADE X
+
+Responsável da iniciativa: X
+Pilares (times) envolvidos:
+- Y
+Responsável técnico: Sabino
+ANÁLISE DE NEGÓCIO
+Épico: jira X
+Resumo das necessidades e impacto
+
+
+- Necessidade: 
+- Impacto:
+- Sem a funcionalidade:
+
+
+Jornada e funcionalidades
+1. 
+2. 
+3. 
+
+Cenários e histórias de usuário:
+1 -
+2 -
+3 -
+
+Jornada de configuração: x
+
+
+As configurações da funcionalidade estão centralizadas em filtros, campos e viewmode formulário.
+
+
+PROTOTIPAGEM
+
+
+Desktop: link figma
+Mobile: link figma
+Prints:
+
+
+ANÁLISE TÉCNICA
+Resumo para Discovery de riscos:
+Soluções e decisões:
+Tecnologias:
+Timebox:
+
+[Delivery] Parcial versão 1
+Contempla:
+* X
+* Y
+* Z
+Não contempla:
+* A
+* B
+* C
+
+- Implementação X: Sugestão inicial 3 dias, será discutido com time
+- Integração Y + qualidade: Sugestão inicial 3 dia, será discutido com time
+
+[Delivery] Parcial versão 2
+Contempla:
+* X
+* Y
+* Z
+Não contempla:
+* A
+* B
+* C
+
+- Implementação X: Sugestão inicial 3 dias, será discutido com time
+- Integração Y + qualidade: Sugestão inicial 3 dia, será discutido com time

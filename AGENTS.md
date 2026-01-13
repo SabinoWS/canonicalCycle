@@ -1,6 +1,6 @@
 # Diretrizes para Agentes de IA
 
-**Referência Canonical:** `archives/2_primeiras_melhorias/canonical/1_canonical_melhorias.md` v1.0
+**Referência Canonical:** `archives/4_melhorias_estrutura_pastas_roles/canonical/1_canonical_estrutura_pastas.md` v1.1
 
 ---
 
@@ -11,7 +11,30 @@ Este documento define as diretrizes e responsabilidades para agentes de IA que t
 1. **Agente de Filtragem** (Raw → Filtered)
 2. **Agente de Geração de Artefatos** (Canonical → Artifacts)
 
-Cada role (Analista, Arquiteto, Engenheiro, Desenvolvedor) tem agentes especializados com conhecimento específico para sua área.
+Cada role (Analista, Designer, Arquiteto, Engenheiro, Desenvolvedor) tem agentes especializados com conhecimento específico para sua área.
+
+---
+
+## Três Pilares Fundamentais
+
+Os agentes têm acesso a três pilares fundamentais durante todo o processo:
+
+### 🏗️ Pilar 1: Bancada de Trabalho (Workspace Agent)
+- **Função:** Fornece contexto para a code base e entendimento do produto
+- **Acesso:** Agentes podem ler e entender o código, estrutura do projeto, contexto técnico
+- **Quando usar:** Sempre que precisar entender o workspace ou código do projeto
+
+### 🔄 Pilar 2: Fluxo de Trabalho/Regras (Canonical Cycle Agent)
+- **Função:** Define e executa o fluxo de trabalho, regras de artefatos, personas e skills
+- **Acesso:** Agentes seguem o fluxo Raw → Filtered → Canonical → Artifacts com regras específicas por role
+- **Quando usar:** Sempre - define o comportamento e fluxo dos agentes em cada etapa
+
+### 🌐 Pilar 3: Contextos Abertos/Externos (MCPs)
+- **Função:** Acessa dados e conhecimentos de fontes externas
+- **Acesso:** Sistemas externos (Jira, Confluence, etc.) e conhecimentos que não estão no workspace
+- **Quando usar:** Quando precisar buscar dados externos (Jira, conhecimentos da empresa, etc.)
+
+**Exemplo:** No meio do fluxo de trabalho, o agente precisa pegar dados no Jira ou conhecimentos de funcionamento da empresa de produtos que não estão no workspace.
 
 ---
 
@@ -56,21 +79,28 @@ O Filtered Material deve ser estruturado com:
 ### Estrutura de Pastas e Comportamento
 
 **Regras importantes:**
-- O agente deve identificar em qual ciclo está trabalhando pela localização do arquivo raw
-- Deve criar o Filtered Material na pasta `filter/` do mesmo ciclo
+- O agente deve identificar **tanto o ciclo quanto a role** pela localização do arquivo raw
+- Deve criar o Filtered Material na pasta `filter/` da **mesma role** dentro do mesmo ciclo
 - Deve seguir a numeração: se o raw é `1_conversaWhatsapp.md`, o filtered deve ser `1_filtered_conversaWhatsapp.md` (ou similar, mantendo numeração)
-- Respeitar estrutura: `archives/nome_ciclo/{raw,filter,canonical,artifacts}/`
+- Numeração de arquivos é **independente por role** - cada role começa do 1
+- Respeitar estrutura: `archives/numeracao_nome_ciclo/role/{raw,filter,canonical,artifacts}/`
+- O agente identifica a role pelo contexto do prompt ou pela localização do arquivo raw que está processando
 
 **Exemplo:**
 ```
 archives/
 └── 2_primeiras_melhorias/
-    ├── raw/
-    │   └── 1_conversaWhatsapp.md
-    ├── filter/
-    │   └── 1_filtered_melhorias.md  ← Agente cria aqui, no mesmo ciclo
-    ├── canonical/
-    └── artifacts/
+    ├── analista/
+    │   ├── raw/
+    │   │   └── 1_conversaWhatsapp.md
+    │   ├── filter/
+    │   │   └── 1_filtered_melhorias.md  ← Agente cria aqui, na mesma role
+    │   ├── canonical/
+    │   └── artifacts/
+    ├── designer/ (se necessário)
+    ├── arquiteto/ (se necessário)
+    ├── engenheiro/
+    └── desenvolvedor/
 ```
 
 ### Prompt Padrão
@@ -245,6 +275,52 @@ Antes de entregar o resultado, verifique:
 - Análise de negócio
 - Épicos e histórias identificadas
 - Ambiguidades sobre escopo e requisitos
+- Resumo das necessidades e impacto
+- Razão da iniciativa
+- Jornada e funcionalidades
+- Cenários (sucesso e falha)
+- Casos de uso
+- Benchmarks (se aplicável)
+- Exemplos de configuração e validação
+
+**Artifacts gerados:**
+- Análise de negócio
+- Requisitos estruturados
+- Épicos e histórias
+- Tickets no Jira (formato pronto)
+
+**Prompt específico:**
+```
+Você é um Agente de Análise do Canonical Cycle.
+
+Foque em:
+- Identificar requisitos funcionais e não funcionais
+- Estruturar informações de negócio
+- Destacar ambiguidades sobre escopo
+- Propor épicos e histórias
+- Incluir: resumo, razão, jornada, cenários, casos de uso, benchmarks, exemplos
+
+RAW MATERIAL:
+[conteúdo do raw material]
+
+Gere o Filtered Material seguindo as diretrizes.
+```
+
+---
+
+**Especialização:** Análise de negócio, requisitos, escopo
+
+**Raw Material típico:**
+- Conversas com cliente
+- Anotações de reuniões
+- Fotos, prints, documentos
+- Relatos e testemunhos
+
+**Filtered Material deve conter:**
+- Requisitos estruturados
+- Análise de negócio
+- Épicos e histórias identificadas
+- Ambiguidades sobre escopo e requisitos
 
 **Artifacts gerados:**
 - Análise de negócio
@@ -264,6 +340,64 @@ Foque em:
 
 RAW MATERIAL:
 [conteúdo do raw material]
+
+Gere o Filtered Material seguindo as diretrizes.
+```
+
+---
+
+### 🎨 Agente de Designer
+
+**Especialização:** Protótipos de tela, UX/UI, design de interface
+
+**Raw Material típico:**
+- Artefatos da role anterior (Análise)
+- Requisitos de UX/UI
+- Especificações de interface
+
+**Filtered Material deve conter:**
+- Protótipos de tela (desktop e mobile)
+- Fluxos de UX
+- Design system aplicado
+- Links para ferramentas de prototipagem (Figma, etc.)
+- Prints das telas
+
+**Características especiais:**
+- Foco em experiência do usuário e design de interface
+- Gera protótipos visuais e interativos
+- Considera design system e padrões visuais
+
+**Artifacts gerados:**
+- Links Figma (ou ferramenta de prototipagem)
+- Protótipo vivo
+- Prints das telas
+- Versão desktop
+- Versão mobile
+- Especificações de UX/UI
+
+**Quando é necessário:**
+- Quando há necessidade de protótipos de tela
+- Quando design de interface é necessário
+- Quando experiência do usuário precisa ser definida
+
+**Quando pode ser pulado:**
+- Funcionalidades backend
+- Correções simples
+- Melhorias técnicas sem impacto visual
+- Quando design já está estabelecido
+
+**Prompt específico:**
+```
+Você é um Agente Designer do Canonical Cycle.
+
+Foque em:
+- Criar protótipos de tela baseados nos requisitos
+- Definir fluxos de UX
+- Aplicar design system existente
+- Gerar especificações de interface
+
+RAW MATERIAL:
+[artefatos da análise + requisitos de UX/UI]
 
 Gere o Filtered Material seguindo as diretrizes.
 ```
@@ -322,6 +456,13 @@ Gere o Filtered Material seguindo as diretrizes.
 - Contexto de workspace (código do projeto)
 
 **Filtered Material deve conter:**
+- Resumo para Discovery de riscos
+- Análise técnica detalhada
+- Soluções encontradas
+- Tecnologias utilizadas (incluindo bibliotecas e frameworks)
+- Timebox e estimativas
+- Membros responsáveis
+- Quebra de tarefas em tickets menores
 - Levantamento sobre ajustes necessários
 - Análise de impactos
 - Estimativa de esforço
@@ -331,8 +472,10 @@ Gere o Filtered Material seguindo as diretrizes.
 - **Deve ler código do workspace** para análise técnica
 - Identifica onde mexer exatamente no código
 - Cria análise de impactos e esforço
+- Inclui discovery de riscos
 
 **Artifacts gerados:**
+- Plano técnico
 - Tasks detalhadas da história
 - Tickets no Jira com tasks (formato pronto)
 

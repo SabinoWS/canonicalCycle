@@ -1,6 +1,6 @@
 # Diretrizes para Humanos
 
-**Referência Canonical:** `archives/2_primeiras_melhorias/canonical/1_canonical_melhorias.md` v1.0
+**Referência Canonical:** `archives/4_melhorias_estrutura_pastas_roles/canonical/1_canonical_estrutura_pastas.md` v1.1
 
 ---
 
@@ -10,6 +10,40 @@ Este documento fornece diretrizes e checklists para humanos que participam do Ca
 
 1. **Revisor de Filtered Material** - transforma Filtered em Canonical
 2. **Aprovador de Canonical Material** - valida e versiona o Canonical
+
+---
+
+## Estrutura de Pastas por Role
+
+**Nova estrutura aprovada:**
+- Cada role tem suas próprias pastas (raw, filter, canonical, artifacts) dentro do ciclo
+- Estrutura: `archives/numeracao_nome_ciclo/role/{raw,filter,canonical,artifacts}/`
+- Roles opcionais (Designer, Arquiteto) só têm pasta quando necessárias
+- Numeração de arquivos é independente por role (cada role começa do 1)
+
+**Exemplo:**
+```
+archives/
+└── 1_nova_feature/
+    ├── analista/
+    │   ├── raw/
+    │   ├── filter/
+    │   ├── canonical/
+    │   └── artifacts/
+    ├── designer/ (quando necessário)
+    ├── engenheiro/
+    └── desenvolvedor/
+```
+
+**Transição entre roles:**
+- Artefatos de uma role são copiados ou referenciados na pasta `raw/` da próxima role
+- Cada role mantém seu próprio ciclo completo
+
+**Regras de numeração:**
+- Nome do ciclo: deve começar com numeração (ex: `1_inicio_projeto`)
+- Pastas de roles: NÃO têm numeração (ex: `analista/`, não `1_analista/`)
+- Pastas de etapas: NÃO têm numeração (ex: `raw/`, não `1_raw/`)
+- Arquivos: têm numeração independente por role (ex: `analista/raw/1_requisitos.md`, `designer/raw/1_prototipo.md`)
 
 ---
 
@@ -251,11 +285,44 @@ Há problemas?
 - Aprovar Canonical Material que será usado para gerar épicos e histórias
 
 **Checklist específico:**
+- [ ] Resumo das necessidades e impacto está completo?
+- [ ] Razão da iniciativa está clara?
+- [ ] Jornada e funcionalidades estão definidas?
+- [ ] Cenários (sucesso e falha) estão documentados?
+- [ ] Casos de uso estão identificados?
+- [ ] Benchmarks foram incluídos (se aplicável)?
+- [ ] Exemplos de configuração e validação estão presentes?
 - [ ] Requisitos funcionais estão claros?
 - [ ] Requisitos não funcionais foram identificados?
 - [ ] Épicos e histórias propostas fazem sentido?
 - [ ] Ambiguidades sobre escopo foram resolvidas?
 - [ ] Análise de negócio está completa?
+- [ ] Épico no Jira foi criado/referenciado?
+
+---
+
+### 🎨 Revisor/Aprovador - Role: Designer
+
+**Responsabilidades:**
+- Revisar Filtered Material com foco em protótipos e UX/UI
+- Validar que protótipos atendem aos requisitos
+- Aprovar Canonical Material que será usado para desenvolvimento
+
+**Quando esta role é necessária:**
+- ✅ Quando há necessidade de protótipos de tela
+- ✅ Quando design de interface é necessário
+- ✅ Quando experiência do usuário precisa ser definida
+- ❌ Funcionalidades backend (pode ser pulada)
+- ❌ Correções simples (pode ser pulada)
+- ❌ Melhorias técnicas sem impacto visual (pode ser pulada)
+- ❌ Quando design já está estabelecido (pode ser pulada)
+
+**Checklist específico:**
+- [ ] Protótipos atendem aos requisitos de UX/UI?
+- [ ] Fluxos de usuário estão claros?
+- [ ] Design system foi aplicado corretamente?
+- [ ] Versões desktop e mobile foram consideradas?
+- [ ] Protótipos estão completos e validados?
 
 ---
 
@@ -291,11 +358,19 @@ Há problemas?
 - Aprovar Canonical Material que será usado para implementação
 
 **Checklist específico:**
+- [ ] Resumo para Discovery de riscos está completo?
+- [ ] Análise técnica está detalhada?
+- [ ] Soluções encontradas estão documentadas?
+- [ ] Tecnologias utilizadas estão listadas?
+- [ ] Timebox e estimativas são realistas?
+- [ ] Membros responsáveis foram definidos?
+- [ ] Quebra de tarefas em tickets menores está completa?
 - [ ] Análise de impactos está correta?
 - [ ] Esforço estimado é realista?
 - [ ] Localização das mudanças no código está clara?
 - [ ] Tasks estão detalhadas o suficiente?
 - [ ] Dependências foram identificadas?
+- [ ] Priorização das tarefas está definida?
 
 ---
 

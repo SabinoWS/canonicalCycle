@@ -1,0 +1,10 @@
+conversei com outras pessoas (matheus e alisson)
+e aparentemente faltou algo
+botar a estrutura de pastas separada por roles
+
+por exemplo:
+
+- archives
+-- numeracao_nome_ciclo
+--- analista
+---- raw / filter / canonical / artifacts 

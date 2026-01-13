@@ -1,12 +1,33 @@
 # Canonical Cycle
 
-**Referência Canonical:** `archives/2_primeiras_melhorias/canonical/1_canonical_melhorias.md` v1.0
+**Referência Canonical:** `archives/4_melhorias_estrutura_pastas_roles/canonical/1_canonical_estrutura_pastas.md` v1.1
 
 ---
 
 ## Visão Geral
 
 O **Canonical Cycle** é um fluxo de trabalho controlado no qual informações brutas são processadas por IA, validadas por humanos e consolidadas em material canônico antes da geração de artefatos e entrega de software.
+
+### Três Pilares Fundamentais
+
+O Canonical Cycle é sustentado por três pilares essenciais:
+
+1. **🏗️ Bancada de Trabalho (Workspace Agent)**
+   - Fornece contexto para a code base e entendimento do produto
+   - Agentes precisam entender o código, estrutura do projeto, contexto técnico
+   - Disponível durante todo o processo do Canonical Cycle
+
+2. **🔄 Fluxo de Trabalho/Regras (Canonical Cycle Agent)**
+   - Define e executa o fluxo de trabalho, regras de artefatos, personas e skills
+   - Gerencia o Canonical Cycle, aplica regras, segue personas e usa skills específicas
+   - Define o comportamento e fluxo dos agentes em cada etapa
+
+3. **🌐 Contextos Abertos/Externos (MCPs)**
+   - Acessa dados e conhecimentos de fontes externas
+   - Sistemas externos (Jira, Confluence, etc.) e conhecimentos que não estão no workspace
+   - Disponível quando agentes precisam de informações externas durante o processo
+
+**Exemplo:** No meio do fluxo de trabalho, o agente precisa pegar dados no Jira ou conhecimentos de funcionamento da empresa de produtos que não estão no workspace.
 
 ### Princípio Fundamental
 
@@ -63,16 +84,18 @@ Criação efetiva do artefato no sistema de destino.
 
 ## Quick Start
 
-1. **Crie um ciclo** em `archives/nome_ciclo/` (ex: `archives/1_nova_feature/`)
-2. **Colete Raw Material** em `archives/nome_ciclo/raw/`
-3. **Use um agente de IA** para gerar Filtered Material na pasta `filter/` do mesmo ciclo (veja [AGENTS.md](./AGENTS.md))
-4. **Revise e aprove** o Filtered Material como Canonical Material em `canonical/` (veja [GUIDELINES.md](./GUIDELINES.md))
-5. **Gere artefatos** a partir do Canonical Material:
-   - Artefatos em `archives/nome_ciclo/artifacts/` OU
+1. **Crie um ciclo** em `archives/numeracao_nome_ciclo/` (ex: `archives/1_nova_feature/`)
+2. **Crie a estrutura por role** dentro do ciclo (ex: `archives/1_nova_feature/analista/`)
+3. **Colete Raw Material** na pasta `raw/` da role (ex: `archives/1_nova_feature/analista/raw/`)
+4. **Use um agente de IA** para gerar Filtered Material na pasta `filter/` da mesma role (veja [AGENTS.md](./AGENTS.md))
+5. **Revise e aprove** o Filtered Material como Canonical Material em `canonical/` da role (veja [GUIDELINES.md](./GUIDELINES.md))
+6. **Gere artefatos** a partir do Canonical Material:
+   - Artefatos em `archives/nome_ciclo/role/artifacts/` OU
    - Alterações diretas no projeto atual (fora de `archives/`)
-6. **Execute o Delivery** publicando os artefatos ou implementando as mudanças
+7. **Passe artefatos para próxima role** (se houver) copiando/referenciando em `raw/` da próxima role
+8. **Execute o Delivery** publicando os artefatos ou implementando as mudanças
 
-**Importante:** O agente deve identificar automaticamente o ciclo pela estrutura de pastas e criar arquivos na pasta correta do ciclo.
+**Importante:** O agente deve identificar automaticamente o ciclo E a role pela estrutura de pastas e criar arquivos na pasta correta da role dentro do ciclo.
 
 Para um exemplo completo, veja [examples/analysis-cycle/](./examples/analysis-cycle/).
 
@@ -95,14 +118,39 @@ canonicalCycle/
 │   ├── architecture-cycle/
 │   └── engineering-cycle/
 └── archives/              # Memória dos ciclos (separado do projeto)
-    └── nome_ciclo/
-        ├── raw/
-        ├── filter/
-        ├── canonical/
-        └── artifacts/
+    └── numeracao_nome_ciclo/
+        ├── analista/
+        │   ├── raw/
+        │   ├── filter/
+        │   ├── canonical/
+        │   └── artifacts/
+        ├── designer/ (quando necessário)
+        │   ├── raw/
+        │   ├── filter/
+        │   ├── canonical/
+        │   └── artifacts/
+        ├── arquiteto/ (quando necessário)
+        │   ├── raw/
+        │   ├── filter/
+        │   ├── canonical/
+        │   └── artifacts/
+        ├── engenheiro/
+        │   ├── raw/
+        │   ├── filter/
+        │   ├── canonical/
+        │   └── artifacts/
+        └── desenvolvedor/
+            ├── raw/
+            ├── filter/
+            ├── canonical/
+            └── artifacts/
 ```
 
-**Importante:** A pasta `archives/` **NÃO faz parte do projeto** - é separada e serve apenas como memória e rastreabilidade dos ciclos. O projeto atual (fora de `archives/`) é onde o trabalho real acontece.
+**Importante:** 
+- A pasta `archives/` **NÃO faz parte do projeto** - é separada e serve apenas como memória e rastreabilidade dos ciclos. O projeto atual (fora de `archives/`) é onde o trabalho real acontece.
+- Cada role tem suas próprias pastas (raw, filter, canonical, artifacts) dentro do ciclo
+- Roles opcionais (Designer, Arquiteto) só têm pasta quando necessárias
+- Numeração de arquivos é independente por role (cada role começa do 1)
 
 ---
 
@@ -111,8 +159,18 @@ canonicalCycle/
 O Canonical Cycle segue um **fluxo sequencial** entre roles, onde os artefatos de uma role se tornam parte do Raw Material da próxima:
 
 ```
-Analista → Arquiteto → Engenheiro → Desenvolvedor
+Analista → Designer (opcional) → Arquiteto (opcional) → Engenheiro → Desenvolvedor
 ```
+
+**Fluxos possíveis:**
+- Analista → Designer → Arquiteto → Engenheiro → Desenvolvedor (quando ambos são necessários)
+- Analista → Designer → Engenheiro → Desenvolvedor (quando Arquiteto não é necessário)
+- Analista → Arquiteto → Engenheiro → Desenvolvedor (quando Designer não é necessário)
+- Analista → Engenheiro → Desenvolvedor (quando ambos são desnecessários)
+
+**Transição entre roles:**
+- Artefatos de uma role (ex: `analista/artifacts/`) são copiados ou referenciados na pasta `raw/` da próxima role (ex: `designer/raw/`)
+- Cada role mantém seu próprio ciclo completo (raw → filter → canonical → artifacts)
 
 ### 🧠 Role: Analista
 
@@ -127,7 +185,7 @@ Raw Material -> Filtered Material -> Canonical Material -> Analysis Artifacts
 - **Canonical:** Material aprovado pelo analista responsável
 - **Artifacts:** Análise de negócio, requisitos, épicos e histórias
 
-**Saída:** Artefatos passam para a próxima role (Arquiteto)
+**Saída:** Artefatos passam para a próxima role (Designer ou Arquiteto)
 
 ### 🏗️ Role: Arquiteto
 
@@ -145,6 +203,28 @@ Raw Material -> Filtered Material -> Canonical Material -> Architecture Artifact
 **Saída:** Artefatos passam para a próxima role (Engenheiro)
 
 **Observação:** Pode não ser necessário em todos os cenários (exemplo: correção de bugs simples)
+
+### 🎨 Role: Designer
+
+**Fluxo:**
+```
+Raw Material -> Filtered Material -> Canonical Material -> Design Artifacts
+```
+
+**Definições:**
+- **Raw:** Artefatos da role anterior (Análise) + requisitos de UX/UI
+- **Filtered:** Protótipos e designs estruturados pela IA
+- **Canonical:** Protótipos aprovados pelo designer responsável
+- **Artifacts:** Protótipos de tela, designs, links Figma, prints
+
+**Características:**
+- Recebe artefatos da role anterior (Análise) como parte do Raw Material
+- Foco em protótipos de tela e experiência do usuário
+- Artefatos passam para a próxima role (Arquiteto ou Engenheiro)
+
+**Saída:** Protótipos aprovados passam para a próxima role (Arquiteto ou Engenheiro)
+
+**Observação:** Pode não ser necessário em todos os cenários (exemplo: funcionalidades backend, correções simples, melhorias técnicas, quando design já está estabelecido)
 
 ### ⚙️ Role: Engenheiro
 
@@ -233,6 +313,7 @@ Ambos os destinos podem ser usados simultaneamente.
 4. 🔁 **Mudou o contexto? Novo ciclo**
 5. 📌 **Artefatos sempre referenciam um Canonical**
 6. 🔄 **Artefatos de uma role se tornam Raw da próxima** (fluxo sequencial)
+7. 🎨 **Designer e Arquiteto são roles opcionais** - podem ser puladas conforme necessidade
 
 ---
 
