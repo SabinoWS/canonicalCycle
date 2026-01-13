@@ -1,7 +1,5 @@
 # Canonical Cycle
 
-**Referência Canonical:** `archives/4_melhorias_estrutura_pastas_roles/canonical/1_canonical_estrutura_pastas.md` v1.1
-
 ---
 
 ## Visão Geral
@@ -27,7 +25,7 @@ O Canonical Cycle é sustentado por três pilares essenciais:
    - Sistemas externos (Jira, Confluence, etc.) e conhecimentos que não estão no workspace
    - Disponível quando agentes precisam de informações externas durante o processo
 
-**Exemplo:** No meio do fluxo de trabalho, o agente precisa pegar dados no Jira ou conhecimentos de funcionamento da empresa de produtos que não estão no workspace.
+**Exemplo de contexto externo:** No meio do fluxo de trabalho, o agente precisa pegar dados no Jira ou conhecimentos de funcionamento da empresa de produtos que não estão no workspace.
 
 ### Princípio Fundamental
 
@@ -84,8 +82,19 @@ Criação efetiva do artefato no sistema de destino.
 
 ## Quick Start
 
-1. **Crie um ciclo** em `archives/numeracao_nome_ciclo/` (ex: `archives/1_nova_feature/`)
-2. **Crie a estrutura por role** dentro do ciclo (ex: `archives/1_nova_feature/analista/`)
+### 🚀 Iniciando um Novo Ciclo
+
+**Opção 1: Usando o Assistente de Inicialização (Recomendado)**
+
+Use o assistente que pergunta o nome do ciclo e a role:
+
+1. **No Cursor ou outra ferramenta de IA:**
+   - Use o prompt em [INICIALIZACAO.md](./INICIALIZACAO.md)
+   - O assistente perguntará o nome do ciclo e a role
+   - A estrutura será criada automaticamente
+
+### 📋 Fluxo de Trabalho
+
 3. **Colete Raw Material** na pasta `raw/` da role (ex: `archives/1_nova_feature/analista/raw/`)
 4. **Use um agente de IA** para gerar Filtered Material na pasta `filter/` da mesma role (veja [AGENTS.md](./AGENTS.md))
 5. **Revise e aprove** o Filtered Material como Canonical Material em `canonical/` da role (veja [GUIDELINES.md](./GUIDELINES.md))
@@ -95,9 +104,9 @@ Criação efetiva do artefato no sistema de destino.
 7. **Passe artefatos para próxima role** (se houver) copiando/referenciando em `raw/` da próxima role
 8. **Execute o Delivery** publicando os artefatos ou implementando as mudanças
 
-**Importante:** O agente deve identificar automaticamente o ciclo E a role pela estrutura de pastas e criar arquivos na pasta correta da role dentro do ciclo.
-
 Para um exemplo completo, veja [examples/analysis-cycle/](./examples/analysis-cycle/).
+
+**Nota:** Para instruções técnicas sobre como agentes devem trabalhar, consulte [AGENTS.md](./AGENTS.md) e [agents/canonicalCycle.md](./agents/canonicalCycle.md).
 
 ---
 
@@ -319,7 +328,11 @@ Ambos os destinos podem ser usados simultaneamente.
 
 ## Documentação
 
-- **[AGENTS.md](./AGENTS.md)** - Diretrizes detalhadas para agentes de IA
-- **[GUIDELINES.md](./GUIDELINES.md)** - Diretrizes e checklists para humanos
-- **[templates/](./templates/)** - Templates para cada estágio do ciclo
+### Para Humanos
+- **[README.md](./README.md)** - Este arquivo (filosofia e visão geral)
 - **[examples/](./examples/)** - Exemplos completos de uso
+
+### Para Agentes de IA
+- **[AGENTS.md](./AGENTS.md)** - Índice de diretrizes para agentes
+- **[agents/canonicalCycle.md](./agents/canonicalCycle.md)** - Instruções completas do fluxo para agentes
+- **[agents/[role].md](./agents/)** - Diretrizes específicas por role
